@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title>Vega's Age Counter</title>
+    <style>
+        .container {
+          width: 500px;
+          height: 100px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 10px;
+          border: 2px solid black;
+          box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: white;
+          background-image: url('https://images.unsplash.com/photo-1542382156909-9ae37b3f56fd');
+          background-size: cover;
+          background-position: center;
+        }
+        .timer {
+          font-size: 48px;
+          font-weight: bold;
+          color: #333;
+          text-shadow: 2px 2px 4px #ccc;
+        }
+        @media only screen and (max-width: 600px) {
+          .container {
+            width: 300px;
+            height: 60px;
+          }
+          .timer {
+            font-size: 24px;
+          }
+        }
+        body {
+          background-image: url('https://images.unsplash.com/photo-1515923152115-758a6b16f35e');
+          background-size: contain;
+          background-position: center;
+        }
+
+        @media only screen and (max-width: 600px) {
+        body {
+          background-image: url('https://images.unsplash.com/photo-1515923152115-758a6b16f35e');
+        }
+        }
+      </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="timer" class="timer">00:00:00:00:00:00</div>
+    </div>  
+  <script>
+    function updateTimer() {
+      const startDate = new Date(1999, 1, 3); // Month is 0-based
+      const currentDate = new Date();
+      if (currentDate < startDate) {
+        document.getElementById("timer").innerHTML = "00:00:00:00:00:00:000";
+        return;
+      }
+      let years = currentDate.getFullYear() - startDate.getFullYear();
+      let months = currentDate.getMonth() - startDate.getMonth();
+      let days = currentDate.getDate() - startDate.getDate();
+      if (days < 0) {
+        months -= 1;
+        days += new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
+      }
+      if (months < 0) {
+        years -= 1;
+        months += 12;
+      }
+      const hours = currentDate.getHours() - startDate.getHours();
+      const minutes = currentDate.getMinutes() - startDate.getMinutes();
+      const seconds = currentDate.getSeconds() - startDate.getSeconds();
+      const milliseconds = Math.floor(currentDate.getMilliseconds() / 10 - startDate.getMilliseconds() / 10);
+      document.getElementById("timer").innerHTML =
+        `${years.toString().padStart(2, "0")}:` +
+        `${months.toString().padStart(2, "0")}:` +
+        `${days.toString().padStart(2, "0")}:` +
+        `${hours.toString().padStart(2, "0")}:` +
+        `${minutes.toString().padStart(2, "0")}:` +
+        `${seconds.toString().padStart(2, "0")}:` +
+        `${milliseconds.toString().padStart(2, "0")}`
+        }
+        setInterval(updateTimer, 1);
+  </script>
+</body>
+</html>
